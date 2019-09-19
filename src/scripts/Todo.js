@@ -32,10 +32,31 @@ class Todo {
       items.forEach(item => {
         this.createDomElements(item.id);
         this.inputText.value = item.title;
-        this.inputDate.value = item.date.toString();
+        this.inputDate.value = this.formatTaskDateTime(item.datetime);
         this.list.appendChild(this.li);
       });
     }
+  }
+
+  formatTaskDateTime(datetime) {
+
+    let data = new Date(datetime);
+    let day = data.getDate();
+    if (day < 10) {
+      day = `0${day}`;
+    }
+
+    let month = data.getMonth() + 1;
+    if (month < 10) {
+      month = `0${month}`;
+    }
+
+    let year = data.getFullYear();
+    let hour = data.getHours();
+    let minute = data.getMinutes();
+    let second = data.getSeconds();
+
+    return `${hour}:${minute}:${second} ${day}-${month}-${year}`;
   }
 
   createDomElements(id) {
@@ -75,7 +96,7 @@ class Todo {
     let newTask = {
       id: Date.now().toString(),
       title: todoTask,
-      date: new Date()
+      datetime: new Date()
     };
 
     items.unshift(newTask);
