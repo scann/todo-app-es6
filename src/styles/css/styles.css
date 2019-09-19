@@ -100,7 +100,8 @@ form input[type='text'] {
 }
 
 form button,
-li button {
+li button,
+.edit-popup button {
   height: 42px;
   border-radius: 5px;
   background-color: #3b8ef3;
@@ -120,7 +121,8 @@ form button {
   background-image: url('../../img/plus-icon.svg');
 }
 
-li button {
+li button,
+.edit-popup button {
   min-width: 100px;
 }
 
@@ -151,4 +153,32 @@ li input {
 
 ul li {
   margin-bottom: 20px;
+}
+
+.edit-popup {
+  display: none;
+  position: relative;
+  border: 1px solid #CCC;
+  padding: 10px;
+  background: #FFF;
+  border-radius: 10px;
+  width: 97%;
+  margin-bottom: 10px;
+}
+
+.edit-item {
+  width: 80%;
+}
+
+.btn-edit-item {
+  position: absolute;
+  right: 50px;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
 }
