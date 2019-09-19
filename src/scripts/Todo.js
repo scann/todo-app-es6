@@ -7,7 +7,7 @@ class Todo {
     this.render();
 
     document.querySelector('.btn-add').addEventListener('click', this.insertTask.bind(this));
-    document.querySelector('.btn-edit').addEventListener('click', this.updateTask.bind(this));
+    document.querySelector('.btn-update').addEventListener('click', this.updateTask.bind(this));
 
     document.addEventListener('click', event => {
       if (!event.target) {
@@ -19,7 +19,7 @@ class Todo {
       }
 
       if (event.target.classList.contains('btn-edit')) {
-        self.updateTask(event);
+        self.renderEditForm(event);
       }
     });
   }
@@ -36,6 +36,24 @@ class Todo {
         this.list.appendChild(this.li);
       });
     }
+  }
+
+  renderEditForm(event) {
+    let id = event.target.getAttribute('data-id');
+
+    let items = JSON.parse(window.localStorage.getItem('items'));
+
+    document.querySelector('.edit-popup').classList.remove('hide');
+    document.querySelector('.edit-popup').classList.add('show');
+    document.querySelector('.btn-update').setAttribute('data-id', id);
+
+    items.forEach(item => {
+      if (item.id === id) {
+        document.querySelector('.edit-item').value = item.title;
+      }
+    });
+
+    window.localStorage.setItem('items', JSON.stringify(items));
   }
 
   formatTaskDateTime(datetime) {
@@ -65,6 +83,7 @@ class Todo {
     this.inputText.setAttribute('disabled', '');
     this.inputText.setAttribute('maxlength', '50');
     this.inputText.setAttribute('type', 'text');
+    this.inputText.setAttribute('data-id', id);
 
     this.inputDate = document.createElement('input');
     this.inputDate.setAttribute('disabled', '');
@@ -123,6 +142,7 @@ class Todo {
 
   updateTask(event) {
     let id = event.target.getAttribute('data-id');
+
     let itemTobeUpdated = document.querySelector('.edit-item').value;
 
     let items = JSON.parse(window.localStorage.getItem('items'));
@@ -136,6 +156,8 @@ class Todo {
     });
 
     window.localStorage.setItem('items', JSON.stringify(items));
+    document.querySelector('.edit-popup').classList.remove('show');
+    document.querySelector('.edit-popup').classList.add('hide');
     this.render();
   }
 }
